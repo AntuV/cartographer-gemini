@@ -4,7 +4,7 @@ import type { Result } from "../shared/result.ts";
 import { err, ok } from "../shared/result.ts";
 import { runCartographerPreflight, type CartographerPreflightInput, type CartographerPreflightResult } from "./preflight.ts";
 
-export type CartographerPreflightAdapterKind = "codex" | "claude" | "generic";
+export type CartographerPreflightAdapterKind = "codex" | "claude" | "gemini" | "antigravity" | "generic";
 
 export interface CartographerPreflightAdapterInput extends CartographerPreflightInput {
 	readonly adapter: CartographerPreflightAdapterKind;

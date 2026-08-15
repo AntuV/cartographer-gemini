@@ -58,23 +58,25 @@ The MCP wrapper exposes `cartographer_index`, `cartographer_view`, `cartographer
 
 ## Installation
 
-The section below documents the legacy Claude Code plugin workflow that produces `docs/CODEBASE_MAP.md` by orchestrating subagents. It is separate from the Cartographer v2 graph CLI above. For new agent/orchestrator workflows, prefer the v2 `brief`, `audit`, and `notes` commands.
+The section below documents the Cartographer skill workflow for **Antigravity** that produces `docs/CODEBASE_MAP.md` by orchestrating Gemini Flash 3.6 subagents using Gemini Pro 3.1. It is separate from the Cartographer v2 graph CLI above.
 
-**Step 1:** Add the marketplace to Claude Code:
+### Installation for Antigravity
 
-```
-/plugin marketplace add kingbootoshi/cartographer
-```
+Copy or clone to your project's `.agents/skills/` directory:
 
-**Step 2:** Install the plugin:
-
-```
-/plugin install cartographer
+```bash
+git clone https://github.com/kingbootoshi/cartographer.git .agents/skills/cartographer
 ```
 
-**Step 3:** Restart Claude Code (may be required for the skill to load)
+Or for global use:
 
-**Step 4:** Use it:
+```bash
+git clone https://github.com/kingbootoshi/cartographer.git ~/.gemini/config/skills/cartographer
+```
+
+### Usage
+
+Use the skill prompt in Antigravity:
 
 ```
 /cartographer
@@ -84,17 +86,17 @@ Or just say "map this codebase" and it will trigger automatically.
 
 ## What it Does
 
-Cartographer orchestrates multiple Sonnet subagents to analyze your entire codebase in parallel, then synthesizes their findings into:
+Cartographer uses **Gemini Pro 3.1** to orchestrate multiple **Gemini Flash 3.6** subagents (`invoke_subagent` with `Model: "flash"`) to analyze your entire codebase in parallel, then synthesizes their findings into:
 
 - `docs/CODEBASE_MAP.md` - Detailed architecture map with file purposes, dependencies, data flows, and navigation guides
-- Updates `CLAUDE.md` with a summary pointing to the map
+- Updates `GEMINI.md` / `AGENTS.md` (or `CLAUDE.md`) with a summary pointing to the map
 
 ## How it Works
 
 1. Runs a scanner script to get file tree with token counts (respects .gitignore)
 2. Plans how to split work across subagents based on token budgets
-3. Spawns Sonnet subagents in parallel - each analyzes a portion of the codebase
-4. Synthesizes all subagent reports into comprehensive documentation
+3. Spawns **Gemini Flash 3.6** subagents in parallel - each analyzes a portion of the codebase
+4. **Gemini Pro 3.1** synthesizes all subagent reports into comprehensive documentation
 
 ## Update Mode
 
@@ -106,11 +108,10 @@ If `docs/CODEBASE_MAP.md` already exists, Cartographer will:
 
 Just run `/cartographer` again to update.
 
-## Token Usage
+## Token Usage & Models
 
-⚠️ **NOTE:** This skill spawns Sonnet subagents for accurate, reliable analysis. Depending on codebase size, this can use significant tokens. Be mindful of your usage.
-
-You can ask Claude to use Haiku subagents instead for a cheaper run, but accuracy may suffer on complex codebases.
+- **Orchestrator**: Gemini Pro 3.1
+- **Exploration Subagents**: Gemini Flash 3.6 (fast and cost-effective for large codebase analysis)
 
 ## Requirements
 
@@ -122,4 +123,4 @@ See [plugins/cartographer/README.md](plugins/cartographer/README.md) for detaile
 
 ## License
 
-MIT
+Apache-2.0 / MIT

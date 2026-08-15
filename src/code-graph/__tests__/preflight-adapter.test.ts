@@ -36,4 +36,17 @@ describe("Cartographer preflight adapter payload", () => {
 		expect(result.data.runtimeEvents[1]?.type).toBe("tool_result");
 		expect(analyzeGraphCommandAdoption(result.data.runtimeEvents).adopted).toBe(true);
 	});
+
+	test("emits adapter payload for antigravity adapter kind", async () => {
+		const result = await buildCartographerPreflightAdapterPayload({
+			adapter: "antigravity",
+			root: join(tempDir, "repo"),
+			path: "src/index.ts",
+			live: true,
+		});
+
+		expect(result.ok).toBe(true);
+		if (!result.ok) throw result.error;
+		expect(result.data.adapter).toBe("antigravity");
+	});
 });

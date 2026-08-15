@@ -38,14 +38,14 @@ First, check if `docs/CODEBASE_MAP.md` already exists:
 Run the scanner script to get an overview. Try these in order until one works:
 
 ```bash
-# Option 1: Relative path / AGY skill root (preferred)
-python3 ${AGY_PLUGIN_ROOT}/skills/cartographer/scripts/scan-codebase.py . --format json
-
-# Option 2: Workspace .agents path
+# Option 1: Workspace .agents path
 python3 .agents/skills/cartographer/scripts/scan-codebase.py . --format json
 
+# Option 2: AGY skill root path
+python3 ${AGY_PLUGIN_ROOT}/skills/cartographer/scripts/scan-codebase.py . --format json
+
 # Option 3: Direct UV execution (auto-installs tiktoken in isolated env)
-uv run plugins/cartographer/skills/cartographer/scripts/scan-codebase.py . --format json
+uv run .agents/skills/cartographer/scripts/scan-codebase.py . --format json
 ```
 
 **Note:** The script uses UV inline script dependencies when run with `uv run`. If tiktoken is missing in standard python:
